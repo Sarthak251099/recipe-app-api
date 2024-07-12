@@ -23,7 +23,7 @@ def create_recipe(user, **params):
         'time_minutes': 22,
         'price': Decimal(5.25),
         'description': 'Sample Description',
-        'link': 'www.example.com/recipe.pdf'
+        'link': 'http://example.com/recipe.pdf'
     }
     defaults.update(params)
 
@@ -31,21 +31,21 @@ def create_recipe(user, **params):
     return recipe
 
 
-class PublicRecipeApiTests(TestCase):
+class PublicRecipeAPITests(TestCase):
     """Test unauthenticated API Tests."""
 
     def setUp(self):
         self.client = APIClient()
 
     def test_auth_required(self):
-        """Test auth required to call API."""
-        res = self.client.get('RECIPES_URL')
+        """Test auth is required to call API."""
+        res = self.client.get(RECIPES_URL)
 
         self.assertEqual(res.status_code, status.HTTP_401_UNAUTHORIZED)
 
 
 class PrivateRecipeApiTests(TestCase):
-    """Test authenticated API Tests."""
+    """Test authenticated API Requests."""
 
     def setUp(self):
         self.client = APIClient()

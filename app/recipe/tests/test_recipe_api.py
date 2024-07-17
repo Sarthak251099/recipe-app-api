@@ -45,7 +45,7 @@ def create_user(**params):
 
 
 class PublicRecipeAPITests(TestCase):
-    """Test unauthenticated API Tests."""
+    """Test unauthenticated API Requests."""
 
     def setUp(self):
         self.client = APIClient()
@@ -159,7 +159,7 @@ class PrivateRecipeApiTests(TestCase):
         self.assertEqual(recipe.user, self.user)
 
     def test_update_user_return_error(self):
-        """Test changing the recipe user reuslts in an error."""
+        """Test changing the recipe user results in an error."""
         new_user = create_user(
             email='user2@example.com',
             password='Testpass123',
@@ -200,11 +200,11 @@ class PrivateRecipeApiTests(TestCase):
             'title': 'Thai curry',
             'time_minutes': 30,
             'price': Decimal('2.58'),
-            'tags': [{'name': 'Thai'}, {'name', 'Dinner'}]
+            'tags': [{'name': 'Thai'}, {'name': 'Dinner'}]
         }
         res = self.client.post(RECIPES_URL, payload, format='json')
 
-        self.assertEqual(res.content, status.HTTP_201_CREATED)
+        self.assertEqual(res.status_code, status.HTTP_201_CREATED)
 
         recipes = Recipe.objects.filter(user=self.user)
         self.assertEqual(recipes.count(), 1)
